@@ -2,9 +2,15 @@
 
 #include <torch/library.h>
 
+#ifdef _WIN32
+#define TORCHSPARSE_API __declspec(dllexport)
+#else
+#define TORCHSPARSE_API 
+#endif
+
 int64_t cuda_version();
 
-torch::Tensor ind2ptr(torch::Tensor ind, int64_t M);
+TORCHSPARSE_API torch::Tensor ind2ptr(torch::Tensor ind, int64_t M);
 torch::Tensor ptr2ind(torch::Tensor ptr, int64_t E);
 
 torch::Tensor partition(torch::Tensor rowptr, torch::Tensor col,
